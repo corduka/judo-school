@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import CTAButton from '../ui/CTAButton';
 import heroImage from '../../assets/judo-hero.jpg';
+import { scrollToSection } from '../../utils/scroll';
 
 const Hero = () => {
   const headlineRef = useRef(null);
