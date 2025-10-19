@@ -8,36 +8,24 @@ const Hero = () => {
   const headlineRef = useRef(null);
   const buttonRef = useRef(null);
 
-  useEffect(() => {
-    // Animation logic
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // Animate Headline: slide up
-          setTimeout(() => {
-            headlineRef.current.classList.add('translate-y-0', 'opacity-100');
-          }, 300); // Slight delay for initial visibility
-
-          // Animate Button: slide up after headline
-          setTimeout(() => {
-            buttonRef.current.classList.add('translate-y-0', 'opacity-100');
-          }, 800); 
-
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 } // Trigger when 10% of the element is visible
-    );
-
+ useEffect(() => {
+    // 1. Animate Headline (after component mount)
     if (headlineRef.current) {
-      observer.observe(headlineRef.current);
-    }
+      setTimeout(() => {
+        // This removes the initial translate-y-10 and opacity-0, triggering the animation
+        headlineRef.current.classList.add('translate-y-0', 'opacity-100');
+      }, 300); // 300ms delay for a smooth load-in effect
 
-    return () => {
-      if (headlineRef.current) {
-        observer.unobserve(headlineRef.current);
+      // 2. Animate Button (after headline)
+      if (buttonRef.current) {
+         setTimeout(() => {
+            // This removes the initial translate-y-10 and opacity-0, triggering the animation
+            buttonRef.current.classList.add('translate-y-0', 'opacity-100');
+          }, 800); // Wait for headline animation to start before moving the button
       }
-    };
+    }
+    
+    // The empty dependency array ensures this runs once on component mount.
   }, []);
 
   return (
